@@ -1,2 +1,5 @@
 linter: jetbrains/qodana-jvm:2023.2-eap
+version: 1.0
 fixesStrategy: apply
+include:
+  - name: IncorrectFormatting

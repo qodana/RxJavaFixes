@@ -815,6 +815,18 @@ public abstract class Completable implements CompletableSource {
     @SchedulerSupport(SchedulerSupport.NONE)
     @SafeVarargs
     public static Completable mergeArray(@NonNull CompletableSource... sources) {
+        int a = 1;
+
+        if (a == 1) {
+                 return complete();
+        }
+
+        if (a == 2) {
+            return
+                    complete();
+        }
+
+
         Objects.requireNonNull(sources, "sources is null");
         if (sources.length == 0) {
             return complete();
