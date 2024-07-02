@@ -24,3 +24,5 @@ jobs:
         with:
           args: --apply-fixes
           push-fixes: "pull-request"
+        env:
+          QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
