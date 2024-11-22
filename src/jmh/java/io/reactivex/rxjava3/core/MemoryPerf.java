@@ -14,6 +14,7 @@
 package io.reactivex.rxjava3.core;
 
 import java.lang.management.ManagementFactory;
+import java.util.Arrays;
 import java.util.concurrent.Callable;
 
 import org.reactivestreams.Subscription;
@@ -123,12 +124,9 @@ public final class MemoryPerf {
         System.out.print(n);
         System.out.printf("           %.3f  0.000 MB%n", use);
 
-        if (array.hashCode() == 1) {
+        if (Arrays.hashCode(array) == 1) {
             System.out.print("");
         }
-
-        array = null;
-        item = null;
 
         Thread.sleep(100);
         System.gc();

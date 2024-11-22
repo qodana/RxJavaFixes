@@ -340,7 +340,6 @@ public final class ObservableFlatMap<T, U> extends AbstractObservableWithUpstrea
                 if (innerCompleted != 0) {
                     if (maxConcurrency != Integer.MAX_VALUE) {
                         subscribeMore(innerCompleted);
-                        innerCompleted = 0;
                     }
                     continue;
                 }
@@ -424,7 +423,6 @@ public final class ObservableFlatMap<T, U> extends AbstractObservableWithUpstrea
                 if (innerCompleted != 0) {
                     if (maxConcurrency != Integer.MAX_VALUE) {
                         subscribeMore(innerCompleted);
-                        innerCompleted = 0;
                     }
                     continue;
                 }

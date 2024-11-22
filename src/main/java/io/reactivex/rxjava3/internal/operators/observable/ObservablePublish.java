@@ -51,7 +51,7 @@ implements HasUpstreamObservableSource<T> {
 
     @Override
     public void connect(Consumer<? super Disposable> connection) {
-        boolean doConnect = false;
+        boolean doConnect;
         PublishConnection<T> conn;
 
         for (;;) {
@@ -90,7 +90,7 @@ implements HasUpstreamObservableSource<T> {
             // we don't create a fresh connection if the current is terminated
             if (conn == null) {
                 PublishConnection<T> fresh = new PublishConnection<>(current);
-                if (!current.compareAndSet(conn, fresh)) {
+                if (!current.compareAndSet(null, fresh)) {
                     continue;
                 }
                 conn = fresh;
