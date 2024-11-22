@@ -6,6 +6,8 @@ on:
     branches:
       - main
       - 'releases/*'
+  issue_comment:
+    types: [created]
 
 jobs:
   qodana:
@@ -17,12 +19,21 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          ref: ${{ github.event.pull_request.head.sha }}  # to check out the actual pull request commit, not the merge commit
-          fetch-depth: 0  # a full history is required for pull request analysis
+          fetch-depth: 0
+
+      - name: 'Determine Qodana Args'
+        id: qodana_args
+        run: |
+          if [ "${{ github.event_name }}" = "issue_comment" ] && echo "${{ github.event.comment.body }}" | grep -q "@qodana_bot fix"; then
+            echo "args=--apply-fixes" >> $GITHUB_OUTPUT
+          else
+            echo "args=" >> $GITHUB_OUTPUT
+
       - name: 'Qodana Scan'
         uses: JetBrains/qodana-action@fixes
+        if: ${{ github.event_name == 'pull_request' || github.event_name == 'push' || (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@qodana_bot fix')) }}
         with:
-          args: --apply-fixes
-          push-fixes: "pull-request"
+          args: ${{ steps.qodana_args.outputs.args }}
+          push-fixes: "branch"
         env:
           QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
